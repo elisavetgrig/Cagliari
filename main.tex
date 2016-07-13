@@ -79,7 +79,7 @@ We consider the QoS parameters such as delay and packet loss. Our target is to m
 We consider the costs of virtual machines. Our target is to minimize the cost of the virtual machines in order to improve the acceptability. \\
 % function - execution cost component - elisavet% 
 \item  \textbf{User-related} 
-We consider the Mean Opinion Score as metric in this case. Our target is to maximize the MOS, thus to improve user`s satisfaction.\\
+We consider the Mean Opinion Score(MOS) as metric in this case. Our target is to maximize the MOS, thus to improve user`s satisfaction.\\
 % QoS - MOS -> estimate MOS by correlation with QoS%
 
 \end{enumerate}
@@ -153,84 +153,55 @@ that tasks that have been already assigned to nodes for execution and set of tas
 The aim of optimization problem is to find the trade-off that best fits the requirements of both improving the overall Qoe  and in the same minimizing the costs. Although, this is an NP-hard problem, which could be time and energy consuming.  in \textit{[12]}, used a non-cooperative game model for the task allocation problem. Neighboring nodes negotiate in order to choose a task assignment strategy \textit{s(i)} that maximizes its own utility function.
 
 \subsection{Definitions}
+\iffalse %define this part% 
 A non-cooperative game is defined by the tuple $\gamma$ = $\langle$ X, {s(i), $u_i$} i $\in$ X $\rangle$, where a utility function $u_i$ is assigned to node \textit{i} $\in$ X for a given strategy vector s(i). The goal of each node is to maximize its own utility. Therefore, a strategy s*(i) is preferred to a strategy s(i), if and only if a $u_i$(s*(i)) > $u_i$(s(i)). For simplicity, we denote S = $\cup$ i $\in$ X s(i) to refer to the strategy of all the nodes in the network. 
-
+\fi
 
 \subsection{Task Utility Functions}
 In order to formalize the correlation between network performance and user perceived quality, a utility function. The concept of utility function is adopted from economics, provides the means for reflecting a normalized and transparent way various services` performance prerequisites, users` degree of satisfaction, different types of networks` diverse resources and dissimilar QoS provisioning mechanisms and capabilities under common utility-based optimization problems. [13] \\ %need further changes 
 The NaE (Negotiation and Execution) algorithm decides which particular node should execute a given task \textit{k} by maximizing a task utility function over the set $T_{next}$ of unassigned nodes, given by:
 
-\begin{equation}%task utility function 
-u_k (S) = \max_{\mathbf{i} \in \mathbf{X}} \{[\omega_t(i,k) + \frac{a}{NF(k)} \times cost(i,j)] \times s(i,k)\}
-\end{equation}
-where \textit{cost(i,j)} is the component related to the cost of the link (i,j), $\omega_t(i,k)$ is the task completion time component of task \textit{k} when it is performed by node \textit{i}, NF(k) is a normalization factor that eliminates the difference in magnitude between completion time and link cost values, and $\alpha$ > 0 is a weighting factor. \\
+
 
 \begin{enumerate}
-\item Task completion component \\
-The set $T_{next}$ include the tasks that are going to be assigned to nodes for execution. Each task \textit{k} $\in$ $T_{next}$ is characterized by two parameters: 
-\begin{itemize}  
-\item $t_d(k)$, which is the deadline for a successful completion of a task.
-\item l(k), which is the number of the required instructions. 
-\end{itemize}
-The task completion time component is defined as: 
-\begin{equation}
-\Omega_t(i,k) = \frac{t_d(k) - t_c(i,k)}{t_d(k)}
-\end{equation}
-where $t_c(i,k)$ is the component time, if task \textit{k} is performed by the node \textbf{i} $t_c(i,k)$ is defined as: 
-$$
-t_c(i,k) = \left\{ \begin{array}{lr}
- l(k) \times t_{instr}(i), &\mbox{ if $t_c(i,k) \le t_d(k)$} \\
-  t_d(k) &\mbox{ if $t_c(i,k) > t_d(k)$} \\
-       \end{array} \right.
-$$
-\item Normalization Factor(k) \\
-The normalization factor is used to make the magnitudes of task completion time component and link cost components comparable to each other. Since \textit{NF(k)} is independent from the task assignment strategy, its value can be computed offline before the negotiation starts. The normalization factor is computed by: 
-\begin{equation}
-NF(k)= \frac{\overline{cost(i,j)}}{\overline{\Omega_t(k)}}
-\end{equation}
-where $\overline{cost(i,j)}$ and $\overline{\Omega_t(k)}$ are the mean of \textit{cost(i,j)} and \textit{$\Omega_t(i,k)$} computed over all nodes \textit{i} $\in$ X.
-\item Weighting factor $\alpha$\\
-The parameter $\alpha$  is a coefficient of the network lifetime component in the task utility function. If $\alpha$ tends to 0, the utility function is influenced by the task completion time component. If $\alpha$ tends to 1, the task completion time component and Link Cost component have comparable magnitudes and therefore influences on the utility function
+\item Application related Component \\
+\item Resource related Component \\
+\item Context related Component \\
+The objective here is to minimize the total execution time considering the cost. \\
+If task $X_\lambda$ is scheduled to \textit{j} VM $S_j^\lambda$ = 1 and $S_j^\lambda$ =0 (j' $\neq$ j ) \\
+The execution time of $X_\lambda$ is given by $\sum_{j=1}^N$ $S_j^\lambda$ $\times$ $t_j^\lambda$ \\
+Represents the \textit{j} VM takes $t_j^\lambda$ to execute $X_\lambda$, if $X_\lambda$ is scheduled to that VM.
+when $t_j$ denoted as the execution time by using \textit{j} VM to execute task $X_\lambda$.  \\
+The total execution time is the sum of the execution time for each task. \\
+$T_{seq}^{tot}$ = $\sum_{\lambda =1}$ $\sum_{j=1}^N$ $S_j^\lambda$ $\times$ $t_j^\lambda$ \\
+The cost of processing $X_\lambda$ denoted by $\sum_{j=1}^N$ $S_j^\lambda$ $\times$ $p_j$\\
+The total resource cost for the task of this application:\\ $C_{seq}^{tot}$ = $\sum_{\lambda =1}^\Lambda$ $\sum_{j=1}^N$ $S_j^\lambda$ $\times$ $p_j$\\
+Every task should be assigned to one VM for execution. This constraint should be satisfied. \\
+$\sum_{j=1}^N$ $S_j^\lambda$ = 1 ($X_\lambda$ $\in$ X) \\
+In this component the optimization problem formulated as: \\
+Min $S_j^\lambda$ \\
+$\sum_{\lambda =1}^{\Lambda}$ $\sum_{j =1}^N$ $S_j^\lambda$ $\times$ $t_j^\lambda$ \\
+Constraints: \\
+\begin{enumerate}
+\item $\sum_{\lambda = 1}^\Lambda$ $\sum_{j = 1}^N$  $S_j^\lambda$ $\times$ $p_j$ $\leq$ $C_{up}$, when $C_{up}$ is the upper bound of resource cost. 
+\item $\sum_{j = 1}^N$ $S_j^\lambda$ = 1
+\item $S_j^\lambda$ $\in$ {0,1}, $X_\lambda$ $\in$ X, $\forall$ j = 1, ..., F
+\end{enumerate}
+\item User related Component \\
 
-\item Link cost component \\
-This component represents the cost minimization that depends on delay and packet loss of the used links. This component is defined in ~\ref{eq:linkcost}. In ~\ref{eq:maxP} and ~\ref{eq:maxD} defined the maximum acceptable values for the packet loss and the delay. The parameters $P^{app}_{max}$ and $D^{app}_{max}$ impose a bound on the packet loss and delay for each application \textit{app} 
-\begin{equation} \label{eq:linkcost}
-cost(i,j) = \sum_{(i,j) \in E_x} \sum_{app \in K} c_{ij} \times x_{ij}^{app}
-\end{equation}
-we compute the cost $c_{ij}$: \\
-$c_{ij}$ = $\alpha$ $\times$ $d_{ij}$ + $\beta$ $\times$ $p_{ij}$ , (i,j) $\in$ $E_x$\\
-$\alpha$, $\beta$ are scale factors and allow us to weight the cost according to the importance of the delay and packet loss for a particular application \\
-$x_{ij}^{app}$ is the amount of tasks corresponding of the application \textit{app} routed on the link (i,j)\\
 
-In this case there are some constraints. 
-\begin{equation}\label{eq:maxP}
-\sum_{(i,j) \in E_x} p_{ij} \times x_{ij}^{app} \le P_{max}^{app} \forall_{app} \in K
-\end{equation}
-\begin{equation}\label{eq:maxD}
-\sum_{(i,j) \in E_x} d_{ij} \times x_{ij}^{app} \le D_{max}^{app} \forall_{app} \in K 
-\end{equation}
 \end{enumerate}
 
 \subsection{Network Utility Function}
 The network utility function is defined as the sum of all task utility functions for those tasks that are not yet assigned to nodes: 
-\begin{equation}
-u_g(S) = \sum_{k \in T_{next}} u_k(S)
-\end{equation}
+% equation % 
+
 This equation implies that the network utility function is maximized when the sum is maximized. However, this is only possible if all the nodes in the network could communicate with each other. The communication overhead resulting from a negotiation of this type would entail an additional transmission cost that would counter the  benefit of the maximization itself, particularly for large networks. For this reason, we choose to let each node negotiate only with its neighbors, achieving a sub-optimal but computationally more efficient solution. Hence, the definition of a node utility function is required.\\
 
-\subsection{Node Utility Function}
-The node utility function must be defined in such a way that any increment in its value must correspond to an equivalent increment in the network utility function. In doing so, an approximation based on local negotiations can be obtained, without the need for network-wide negotiations. The node utility function $u_i$ can then be written as an aggregation of the marginal contributions $u_k^{mar}(s(i))$ of node \textit{i} to each task \textit{k}. The network utility function is given by:
-\begin{equation}
-u_i(s(i)) = \sum_{k \in T_{next}} u_k^{mar} (s(i)) 
-\end{equation}
-The marginal contribution is defined as a Wonderful Life Utility (WLU). WLU is the difference between the task utility for a given node strategy \textit{s(i)} and the task utility for the null strategy \textit{s0(i)}, in which all the elements are equal to 0, i.e. the node is not contributing to any task. The marginal utility of node \textit{i} to task \textit{k} in then computed by:
-\begin{equation}
-u_k^{mar} (s(i)) = u_k(s(i)) - u_k(s0(i))
-\end{equation}
-Note that marginal utility is null when the node is not contributing to the task as a part of its strategy.\\
+
 
 \section{Negotiation and Execution(NaE) Algorithm}
-The aim the NaE algorithm is to maximize the network utility function. In order to achieve this, individual node utility functions are maximized by means of a negotiation between neighboring nodes. The negotiation is based on a greedy search algorithm, called Distributed Stochastic Algorithm (DSA). 
+The aim the NaE algorithm is to maximize the network utility function.  The negotiation is based on a greedy search algorithm, called Distributed Stochastic Algorithm (DSA). 
 
 \section{Performance Evaluation}
 \section{Conclusion \&\ Future Work}
