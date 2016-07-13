@@ -32,13 +32,11 @@ Moreover, in today`s competitive environment users have the option to choose fro
 
 A main issue in future networks is the management of QoE. The QoE estimation in future networks services will require per application analysis in which the main properties that can impact user-perceived quality are determined. The monitoring and measuring of QoE is a different thing from the maximization of it. The maximization of QoE requires early detection of potential QoE-affecting problems and solves them as soon as possible and in the same time prioritizes them, in order to tackle with highest impact problems in terms of potential revenue. [1] \\
 
-Thus ,% the aim of this paper is to develop an SD-based approach for QoE management of future multimedia services.In order to meet this goal, this paper develop a flexible, an efficient and scalable architecture with autonomous behavior in order to succeed high level of QoE in future networks.%Quality-of-Experience (QoE)// in future networks. 
-%This architecture is based on the principles of network softwarization using techologies such as such as Software-Defined Networks (SDN) and Network Function Virtualization (NFV).
-%
-%we can remove this paragraph because the second unbundling using software/hardware decoupling and control/user plane separation, and (iii) Open using open source software and open interfaces.
+Thus , the aim of this paper is to develop an SD-based approach for QoE management of future multimedia services.In order to meet this goal, this paper develop a flexible, an efficient and scalable architecture with autonomous behavior in order to succeed high level of QoE in future networks.
+
 SDN and   three principles: (i) Network Softwarization using technologies such as Software-Defined Networks (SDN) and Network Function Virtualization (NFV), (ii) unbundling using software/hardware decoupling and control/user plane separation, and (iii) Open using open source software and open interfaces.//
-Flexibility, scalability and autonomous behavior objective can be achieved by Network Softwarization [NetSoft2015]. Network softwarization is a transformation trend to design, implement, deploy, manage and maintain network equipment and network components by software programming. %Network softwarization provides  distributed virtual platforms which can excute any network function and networked services  as applications on Virtual Machines which are allocated, managed and moved dynamically on general purpose Hardware//
-%This paper adopts the principles and the use of of SDN and NFV in the development of QoE management approach for future multimedia services in the next generation networks.//
+Flexibility, scalability and autonomous behavior objective can be achieved by Network Softwarization [NetSoft2015]. Network softwarization is a transformation trend to design, implement, deploy, manage and maintain network equipment and network components by software programming. Network softwarization provides  distributed virtual platforms which can excute any network function and networked services  as applications on Virtual Machines which are allocated, managed and moved dynamically on general purpose Hardware//
+This paper adopts the principles and the use of of SDN and NFV in the development of QoE management approach for future multimedia services in the next generation networks.//
 
 In SDNs, the network control is separated from the user plane and thus we are able to manage the network resources regarding the design, delivery and operation of network services in a scalable, flexible and dynamic way. Furthermore, the NFV allows virtualization of software-based network functions. There is no longer need to install and manage dedicated hardware devices for networking and service functions.
 %For network operators, SDNs and NFV have a potential significant reductions of CAPEX and OPEX and aim on softwarization of everything everywhere in order to meet various network management and service objectives.
@@ -53,19 +51,47 @@ An effective task-scheduling can match demands of tasks with resource provisioni
 
 In current paper, we are apply a multimedia task-level scheduling using Software Defined Networks and Network Function Virtualization in order to improve the overall Quality of Experience.  
 
+
+
+
 \section{State-of-the-Art Section}
 
  The network resource allocation is a major problem of multimedia communications. In order to address this problem, a cross-layer approach has been proposed in [7]. There have been conducted many studies regarding optimization of network resource allocation for wireless video delivery but most of them are focusing on throughput maximization [8]. Although, in real-time applications such as video streaming, there are dynamic changes of the application requirements (e.g. delay, packet loss, data rate, etc.) thus the QoE optimization that based on throughput is not the optimal solution with respect to the user-perceived quality. [7] Note that, initially, the QoE-based optimization proposed for elastic application such as file transfers, which captures the user`s satisfaction as a function of data rate using a concave utility function. [9]\\
 
 In [7], the authors apply a QoE-based optimization framework in order to allocate efficiently the network resources for video delivery. The aim from network operator`s view is to allow the maximum number of users to join the system and in the same time to keep a good level of service quality. In order to do that, the operator has the ability to set a policy. The operator sets a “Target mean MOS” for all users and this leads to a significant network resource saving. These resources could be used in the future from other users or could be used for the support of high-demand applications. \\
 
+\section{Framework}
+In this paper, our target is to improve the overall QoE in case of adaptive video streaming application using NFV and SDN technologies. 
+Numerous challenges may be identified related to the issue of QoE optimization. The initial concern involves modeling QoE for a video streaming service in terms of identifying QoE influence factors and their relationship to QoE Metrics. But first we are going to present the framework that we based in order to develop our model. Our idea is to improve each parameter in these categories in order to improve the overall QoE. Thus, our framework is based on the classification of ARCU model [arcuModel]. 
+In this model, the Influence Factors  categorized in 4 categories: Application-related, Resource-related, Context-related and User-related. Regarding our service the related parameters in these categories are the following: 
+
+\begin{enumerate}
+\item \textbf{Application-related} 
+We consider video parameters such as codec, bitrate and bandwidth, in order to improve the quality of the content and the response time of the service. \\
+% how we can change the codec? how we can improve this? % 
+% how we can improve the bitrate and the bandwidth? %
+
+\item \textbf{Resource-related} 
+We consider the QoS parameters such as delay and packet loss. Our target is to maximize the QoS in order to improve the reliability of the service in question. \\
+% function to maximize the QoS %
+
+\item \textbf{Context-related} 
+We consider the costs of virtual machines. Our target is to minimize the cost of the virtual machines in order to improve the acceptability. \\
+% function - execution cost component - elisavet% 
+\item  \textbf{User-related} 
+We consider the Mean Opinion Score as metric in this case. Our target is to maximize the MOS, thus to improve user`s satisfaction.\\
+% QoS - MOS -> estimate MOS by correlation with QoS%
+
+\end{enumerate}
+In order to improve the overall QoE we should improve all the above parameters with specific techniques or functions. Because the quality optimization problem consists of maximizing a multidimensional quality function. Thus, in this case, we establish the quality levels and then we optimize them. 
 
 \section{Problem Formulation}
-We formulate the problem of dynamic task allocation in an adaptive video streaming scenario considering QoE influence factors in order to improve the overall QoE. Regarding QoE , we consider Application, Resource, Content and User related factors, that influence the video quality perceived by the end-user.  The proposed architecture is based on Network Function Virtualization (NFV) and Software Defined network (SDN) technologies. \\
+We formulate the problem of dynamic task allocation in an adaptive video streaming scenario considering QoE influence factors in order to improve the overall QoE. Regarding QoE , we consider many influence factors as we discussed in previous section, that influence the video quality perceived by the end-user.  The proposed architecture is based on Network Function Virtualization (NFV) and Software Defined network (SDN) technologies. \\
 
-Different applications have different requirements and different parameters and a variety of tasks have to be executed. Each application can be divided into smaller tasks that can be assigned to different Virtual Machines (VMs) in order to be executed. VMs are installed in different network devices each one implementing only one Virtual Function (VF), as illustrated in Figure~\ref{fig:networkmodelnfvsdn}.
+Different applications have different requirements and different parameters and a variety of tasks have to be executed. Each application can be divided into smaller tasks that can be assigned to different Virtual Machines (VMs) in order to be executed. VMs are installed in different network devices (NDs) each one implementing only one Virtual Function (VF), as illustrated in Figure~\ref{fig:networkmodelnfvsdn}. Each network device denoted as \textit{N} and each NF as \textit{F}. There are \textit{j} types of a NF instances. Each type have different price and capabilities. \\ 
+
 %we should define the NFs%
-Due to the heterogeneous characteristics, some VMs can perform the same task faster than others. The Negotiation and Execution (NaE) [Old TAN] [10] algorithm is used to allocate the tasks to suitable VMs. NaE algorithm includes negotiations between the network devices to determine task assignments. When a network device receives data, it decides if it is going to perform a task or not. \\
+Due to the heterogeneous characteristics, some VMs can perform the same task faster than others or the cost may be different. The Negotiation and Execution (NaE) [Old TAN] [10] algorithm is used to allocate the tasks to suitable VMs. NaE algorithm includes negotiations between the network devices to determine task assignments. When a network device receives data, it decides if it is going to perform a task or not. \\
 
 \begin{figure}[!ht]
   \caption{Network Model NFV/SDN view}
@@ -85,7 +111,7 @@ There is an video application defined as \textit{app} in a set of \textit{K} app
 \end{figure}
 
 We suppose that a multimedia application can be decomposed into $\lambda$ tasks. Each node in the DAG, represents a task. 
-Thus X= {X1, X2, ... X$\lambda$} represents the set of the tasks. Each edge in the DAG is characterizing the priority constraint between two tasks, e.g. the Task 3 cannot be executed until Task2 has finished. Figure ~\ref{fig:adaptivestreaming} illustrates the DAG of the media streaming content task chain. In this case, the delivery chain includes 4 task: Transcoding, Encapsulation, Encryption and Origin Server[11]. Thus, each one of these tasks should be executed by a VF.
+Thus X= {X1, X2, ... X$\lambda$} represents the set of the tasks. Each edge in the DAG is characterizing the priority constraint between two tasks, e.g. the Task 3 cannot be executed until Task2 has finished. Figure ~\ref{fig:adaptivestreaming} illustrates the DAG of the media streaming content task chain. In this case, the delivery chain includes 4 task: Transcoding, Encapsulation, Encryption and Origin Server[11]. Thus, each one of these tasks should be executed by a VM.
 
 \begin{figure}[!ht]
   \caption{DAG for adaptive media streaming}
@@ -96,13 +122,14 @@ Thus X= {X1, X2, ... X$\lambda$} represents the set of the tasks. Each edge in t
 
 \section{Network Model}
 The network includes two types of nodes, the Network Devices (NDs) and the Network Functions (NFs). Each Network Device (ND) consists of many Virtual Machines (VMs). Each VM implements one Virtual Function (VF) %we should specify which Functions%. 
-At the top of the hierarchy is an Application in Management Plane, which manages the network devices via the SDN Controller.
-The negotiations are performed among NFs in the same ND, thus there are no multi hop negotiations. Thus, there is no communication between NFs belonging to different NDs, in order to reduce the overhead caused by negotiations. The Network model is illustrated in Figure~\ref{fig:networkmodel}.
+We declare that $s_j^\lambda$ = 1, if the $X_\lambda$ is assigned to a \textit{j} VM, otherwise it is equal to 0. \\
 
-Suppose that there are \textit{N} types of VF instances. Each task can be served by specific type VF instance, because different types of VF instances have different price rates and resource capabilities, which leads to different execution time. 
+At the top of the hierarchy is an Application in Management Plane, which manages the network devices via the SDN Controller.
+The negotiations are performed among vMs in the same ND, thus there are no multi hop negotiations. Thus, there is no communication between VMs belonging to different NDs, in order to reduce the overhead caused by negotiations. The Network model is illustrated in Figure~\ref{fig:networkmodel}.
+
+Suppose that there are \textit{J} types of VF instances. Each task can be served by specific type VF instance, because different types of VF instances have different price rates and resource capabilities, which leads to different execution time. 
 We denote  $t^\lambda_j$ as the execution time by using type \textit{j} VM instance to execute the task $X_\lambda$
-We denote $p_j$ the resource cost of the type \textit{j} VM instance. 
-We assume that each task can only be assigned to one VM instance for execution. Thus, our purpose is the dynamic assignment of the tasks to VMs in order to improve the QoE perceived from the end-user. 
+We assume that each task can only be assigned to one VM instance for execution. Thus, our purpose is the dynamic assignment of the tasks to VMs in order to improve the QoE perceived from the end-user considering QoE influence factors. 
 
 
 \begin{figure}[!ht]
@@ -113,12 +140,6 @@ We assume that each task can only be assigned to one VM instance for execution. 
 \end{figure}
 
 
-
-
-%There is an Application \textit{app} in a set of \textit{K} applications. This application is described as a DAG of tasks: $G_T$ = (T, $E_T$), where T = $\{\ 1 \cdots ,\lambda, \cdots \Lambda \}\ $ is a set of the tasks and $E_T$ = ($e_{uw}$) is the set of edges. Each edge $e_{uw}$ representing a undirectional data transfer from task $_u$ to task $_w$. En example of the DAG is illustrated in Figure~\ref{fig:generictasks} %
-
-
-%A binary vector s(i) = \lceil s(i, \lambda) \rfloor  for \lambda  \in Tasks 
 A binary vector $s(i) = [s(i, \lambda)]$ for $\lambda \in Tasks$ can be assigned to each node \textit{i} in the network. The state $s(i, \lambda)$ is a boolean value representing the current state of node \textit{i} corresponding to task $\lambda$, i.e $s(i,\lambda) = 1$ when node \textit{i} performs task $\lambda$. The \textit{s(i)} vector called \textbf{Task Assignment Strategy} of node \textit{i}. The state $s(i,\lambda)$ can be set 1, only if its predecessor tasks have been assign to node, i.e.  $s(i,\lambda) = 1$ if s(j,l) = . Where $T_{in}(\lambda)$ are the ingress tasks for task $\lambda$. With reference to Figure~\ref{fig:generictasks},  $T_{in}(Task1) = {}$, hence it is a source task, $T_{in}(Task2) = {Task1}$, $T_{in}(Task3) = {Task2}$, $T_{in}(Task4) = {Task3}$.    \\
 
 Moreover, a binary Vector \textit{ d(i) = (d(i,$\lambda$))} is defined, where \textit{d(i,$\lambda$) = 1}, if node \textit{i} is able to perform task \textit{$\lambda$}. Consider that \textit{s(i,$\lambda$) = 1} is possible only if \textit{d(i,$\lambda$) = 1}, which means that \textit{d(i,$\lambda$) $\geq$  s(i,$\lambda$)} .
@@ -129,32 +150,10 @@ that tasks that have been already assigned to nodes for execution and set of tas
 
 \section{Task Assignment model}
 
-The aim of optimization problem is to find the trade-off that best fits the requirements of both %should change that% 
-minimizing application completion time and minimizing the costs of the links (considering delay and packet loss) in order to improve user`s QoE. Although, this is an NP-hard problem, which could be time and energy consuming.  in \textit{[12]}, used a non-cooperative game model for the task allocation problem. Neighboring nodes negotiate in order to choose a task assignment strategy \textit{s(i)} that maximizes its own utility function.
+The aim of optimization problem is to find the trade-off that best fits the requirements of both improving the overall Qoe  and in the same minimizing the costs. Although, this is an NP-hard problem, which could be time and energy consuming.  in \textit{[12]}, used a non-cooperative game model for the task allocation problem. Neighboring nodes negotiate in order to choose a task assignment strategy \textit{s(i)} that maximizes its own utility function.
 
 \subsection{Definitions}
-A non-cooperative game is defined by the tuple $\gamma$ = $\langle$ X, {s(i), $u_i$} i $\in$ X $\rangle$, where a utility function $u_i$ is assigned to node \textit{i} $\in$ X for a given strategy vector s(i). The goal of each node is to maximize its own utility. Therefore, a strategy s*(i) is preferred to a strategy s(i), if and only if a $u_i$(s*(i)) > $u_i$(s(i)). For simplicity, we denote S = $\cup$ i $\in$ X s(i) to refer to the strategy of all the nodes in the network. We consider that each node \textit{i} is characterized by node and link parameters, they are presented in Table \ref{table:parameters}. Note that, the link parameters related to the link of node \textit{i} with the node \textit{j}.\\
-
-\begin{table}[tpb]
-\centering
-\caption{Parameters}
-\label{table:parameters}
-\begin{tabular}{|c|c|c|}
- \hline
- Type  & Parameter & Description \\
-   \hline
-	Node &  $t_{instr}(i)$ & The time need by node i to perform a single instruction \\
-  \hline
-	Link &  $P^{app}_{max}$ & The maximum acceptable packet loss for a specific application \\
-  \hline
-   Link &    $D^{app}_{max}$ & The maximum acceptable delay for a specific application \\
-  \hline
-  	Link &   $p_{ij}$ & Packet loss on the link (i,j) \\
-  \hline
-  	Link &   $d_{ij}$ & Delay on the link (i,j) \\
-  \hline
-\end{tabular}
-\end{table}
+A non-cooperative game is defined by the tuple $\gamma$ = $\langle$ X, {s(i), $u_i$} i $\in$ X $\rangle$, where a utility function $u_i$ is assigned to node \textit{i} $\in$ X for a given strategy vector s(i). The goal of each node is to maximize its own utility. Therefore, a strategy s*(i) is preferred to a strategy s(i), if and only if a $u_i$(s*(i)) > $u_i$(s(i)). For simplicity, we denote S = $\cup$ i $\in$ X s(i) to refer to the strategy of all the nodes in the network. 
 
 
 \subsection{Task Utility Functions}
